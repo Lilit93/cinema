@@ -1,5 +1,3 @@
-
-
 const {DataTypes: Sequelize} = require("sequelize");
 
 module.exports = {
