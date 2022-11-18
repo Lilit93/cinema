@@ -1,7 +1,7 @@
+
 import { Request, Response, RequestHandler } from "express";
 import path from 'path';
 import db from '../db/models'
-
 class HallsController {
     public addHall = async (req, res) => {
         try {
