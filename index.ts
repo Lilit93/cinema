@@ -6,6 +6,7 @@ import serverRouter from "./routes/servers";
 import hallRouter from "./routes/hallRouter";
 import filmRouter from "./routes/filmRouter";
 import chairRouter from './routes/chairRouter';
+import timelineRouter from './routes/timelineRouter';
 import {models} from "./db";
 const app = express();
 app.use(bodyParser.json());
@@ -16,7 +17,9 @@ app.use(express.json());
 app.use('/server', serverRouter);
 app.use('/api/halls', hallRouter);
 app.use('/api/films', filmRouter);
-app.use('/api/chairs', chairRouter)
+app.use('/api/chairs', chairRouter);
+app.use('/api/timeline', timelineRouter);
+
 // app.use('/api/timelines', timelineRouter);
 // app.use('/api/chairs', chairRouter);
 // app.use('/api/reservations', reservationRouter);
