@@ -26,6 +26,7 @@ class HallsController {
             const { name } = req.body;
             const hall = await db.Halls.findOne({ 
                 where:{ id:id }});
+                console.log("hall", hall)
             if(!hall){
                 return res.status(400).send({message: 'Hall not found'})
             };
@@ -37,8 +38,6 @@ class HallsController {
             console.log("eeee", e)
         }
     };
-
-    public 
         
     public deleteHall = async (req, res) => {
         try{

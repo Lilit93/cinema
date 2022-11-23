@@ -23,7 +23,7 @@ class FilmsController {
             const { id } = req.params;
             const {name, price, duration,language, categories } = req.body;
             if (name || price || duration || language || categories){
-                await db.Films.update( {name, price, duration,language, categories}, {where: {id:  id}}) 
+                await db.Films.update( {where: {id: id}},{name, price, duration,language, categories}) 
                 res.status(200).send({message: 'Film is updated'})
             }
             return res.status(400).send({message: 'Film not found'})
