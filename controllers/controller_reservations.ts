@@ -5,9 +5,17 @@ class ReservationController {
     public addReservation = async (req, res) => {
         try {
             const { timelineId, ChairId } = req.body;
-            await db.Halls.create( { timelineId, ChairId } );
-            return res.status(200).send({ message: 'Reservation is added' });
+            const findeTimeline = await db.Reservations.findOne({
+                where :{timelineId:timelineId} });
+            const findeChair = await db.Reservation.findOne({
+                where :{ChairId:ChairId}});
+            if(findeTimeline && findeChair){
+                return res.status(400).send({message: "Chair is not available"})
+            }
+                await db.Reservations.create( { timelineId, ChairId } );
+                return res.status(200).send({ message: 'Reservation is added' });
         } catch (e) {
+
             console.log(e);
             res.status(400).send({error: e})
         }
@@ -49,3 +57,5 @@ class ReservationController {
         }
     }
 }
+
+export default ReservationController

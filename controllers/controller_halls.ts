@@ -37,6 +37,8 @@ class HallsController {
             console.log("eeee", e)
         }
     };
+
+    public 
         
     public deleteHall = async (req, res) => {
         try{
