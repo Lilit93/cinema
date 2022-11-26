@@ -1,7 +1,7 @@
-
 import { Request, Response, RequestHandler } from "express";
 import path from 'path';
 import db from '../db/models'
+
 class HallsController {
     public addHall: RequestHandler = async (req, res) => {
         try {
@@ -20,17 +20,16 @@ class HallsController {
     };
 
 
-    public updateHall  = async (req, res) => {
+    public updateHall : RequestHandler = async (req, res) => {
         try{
             const { id } = req.params;
-            const { name } = req.body;
+            const { name: any } = req.body;
             const hall = await db.Halls.findOne({ 
                 where:{ id:id }});
-                console.log("hall", hall)
             if(!hall){
                 return res.status(400).send({message: 'Hall not found'})
             };
-            await db.Halls.update({name}, {where: {id : id}}) 
+            await db.Halls.update({name: any}, {where: {id : id}}) 
             res.status(200).send({message: 'Hall is updated'})
         } catch(e){
             console.log(e);
