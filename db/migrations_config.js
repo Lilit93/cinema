@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
+
 const config = {
     host: process.env.DB_HOST || "localhost",
     port: process.env.DB_PORT || 5432,

@@ -37,7 +37,7 @@ const FilmSchema = {
         }
 };
 const FilmOptions = {
-        freezeTableName: true,
+        freezeTableName: true, 
         schema: 'public',
         timestamps: false
 

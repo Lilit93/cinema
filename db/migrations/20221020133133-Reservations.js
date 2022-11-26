@@ -26,10 +26,7 @@ module.exports = {
       },
       onDelete: 'cascade',
     },
-    reservation: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-    },
+  
     createdAt: {
       type: Sequelize.DATE,
       defaultValue: Sequelize.NOW,

@@ -13,23 +13,31 @@ class FilmsController {
             res.status(400).send({error: e})
         }
     };
+
     public getAll = async (req, res) => {
+        try{
         const films = await db.Films.findAll();
        return res.status(200).json(films)
-
+        } catch(e){
+            console.log(e);
+            res.status(400).send({error: e})
+        }
     };
+
     public updateFilm = async (req, res) => {
         try{
             const { id } = req.params;
             const {name, price, duration,language, categories } = req.body;
             if (name || price || duration || language || categories){
-                await db.Films.update( {where: {id: id}},{name, price, duration,language, categories}) 
+                await db.Films.update( {name, price, duration,language, categories}, {where: {id: id}}) 
+
                 res.status(200).send({message: 'Film is updated'})
+                return;
             }
             return res.status(400).send({message: 'Film not found'})
         } catch(e){
+            console.log(e);
             res.status(400).send({error: e})
-            
         }
     };
         

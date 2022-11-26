@@ -4,15 +4,14 @@ import db from '../db/models'
 class ReservationController {
     public addReservation = async (req, res) => {
         try {
-            const { timelineId, ChairId } = req.body;
-            const findeTimeline = await db.Reservations.findOne({
-                where :{timelineId:timelineId} });
-            const findeChair = await db.Reservation.findOne({
-                where :{ChairId:ChairId}});
+            const { timelineId, chairId } = req.body;
+            const findeTimeline = await db.Reservations.findOne({ where :{ timelineId: timelineId } });
+            const findeChair = await db.Reservations.findOne({ where :{ chairId: chairId }});
             if(findeTimeline && findeChair){
                 return res.status(400).send({message: "Chair is not available"})
             }
-                await db.Reservations.create( { timelineId, ChairId } );
+                //@ts-ignore
+                await db.Reservations.create( { timelineId, chairId } );
                 return res.status(200).send({ message: 'Reservation is added' });
         } catch (e) {
 
@@ -28,17 +27,16 @@ class ReservationController {
     public updateReservation = async (req, res) => {
         try{
             const { id } = req.params;
-            const {timelineId, ChairId } = req.body;
-            if (timelineId || ChairId){
-                await db.Reservations.update( {timelineId, ChairId}, {where: {id:  id}}) 
+            const {timelineId, chairId } = req.body;
+            if (timelineId || chairId){
+                await db.Reservations.update( {timelineId, chairId}, {where: {id:  id}}) 
                 res.status(200).send({message: 'Reservation is updated'})
+                return;
             }
             return res.status(400).send({message: 'Reservation is not found'})
         } catch(e){
-
-            
+            console.log(e);
             res.status(400).send({error: e})
-            
         }
     };
 
@@ -49,7 +47,7 @@ class ReservationController {
             if(!hall){
                 return res.status(400).send({message: 'Reservation not found'})
             }
-            await db.Halls.destroy({where: {id: hall.id}}) 
+            await db.Reservations.destroy({where: {id: id}}) 
             res.status(200).send({message: 'Reservation is deleted'})
         } catch(e){
             console.log(e);
