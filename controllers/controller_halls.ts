@@ -3,24 +3,24 @@ import path from 'path';
 import db from '../db/models'
 
 class HallsController {
-    public addHall = async (req, res) => {
+    public addHall: RequestHandler = async (req, res) => {
         try {
-            const { name } = req.body;
-            await db.Halls.create( { name } );
+            const { name: any } = req.body;
+            await db.Halls.create( { name: any } );
             return res.status(200).send({ message: 'Hall is added' });
         } catch (e) {
             console.log(e);
             res.status(400).send({error: e})
         }
     };
-    public getAll = async (req, res) => {
+    public getAll : RequestHandler = async (req, res) => {
         const halls = await db.Halls.findAll();
        return res.status(200).json(halls)
 
     };
 
 
-    public updateHall = async (req, res) => {
+    public updateHall  = async (req, res) => {
         try{
             const { id } = req.params;
             const { name } = req.body;
@@ -35,7 +35,6 @@ class HallsController {
         } catch(e){
             console.log(e);
             res.status(400).send({error: e})
-            console.log("eeee", e)
         }
     };
         
