@@ -7,7 +7,7 @@ const ReservationSchema = {
         allowNull: false,
         type: Sequelize.INTEGER,
     },
-    TimelineId: {
+    timelineId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -16,7 +16,7 @@ const ReservationSchema = {
         },
         onDelete: 'cascade',
     },
-    ChairId: {
+    chairId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -25,10 +25,7 @@ const ReservationSchema = {
         },
         onDelete: 'cascade',
     },
-    reservation: {
-        type: Boolean,
-        allowNull: false,
-    },
+    
     createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
@@ -44,18 +41,20 @@ const ReservationOptions = {
     timestamps: false
 };
 const ReservationAssociation = (schema) => {
-    schema.Reservations.hasOne(schema.Timelines, {
+    schema.Reservations.hasMany(schema.Timelines, {
         as: 'timelines',
-        foreignKey: 'timelineId',
-        targetKey: 'id',
+        foreignKey: 'id',
         onDelete: 'CASCADE',
     });
     schema.Reservations.hasOne(schema.Chairs, {
         as: 'chairs',
-        foreignKey: 'Id',
+        foreignKey: 'id',
         onDelete: 'CASCADE',
     });
 }
 export const getModel = (seq) => {
-    return seq.define('Reservations', ReservationSchema, ReservationOptions)
+    const model =  seq.define('Reservations', ReservationSchema, ReservationOptions);
+    model.associate = ReservationAssociation;
+    return model
+    
 }

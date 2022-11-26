@@ -45,12 +45,7 @@ const ChairAssociation = (schema) => {
         foreignKey: 'hallId',
         onDelete: 'CASCADE',
     });
-    schema.Chairs.hasOne(schema.Reservations, {
-        as: 'reservation',
-        foreignKey: 'reservationId',
-        targetKey: 'id',
-        onDelete: 'CASCADE',
-    });
+    
 };
 export const getModel = (seq) => {
     const model = seq.define('Chairs', ChairSchema, ChairOptions);

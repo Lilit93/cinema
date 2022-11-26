@@ -111,11 +111,11 @@ class TimelinesController {
     public deleteTimelineById = async (req,res) => {
         try{
             const {id} =req.params;
-            const timelineId = await db.Timelines.findOne(id);
+            const timelineId = await db.Timelines.findOne({where :{id:id}});
             if(!timelineId) {
                 return res.status(400).send({message: "Timeline Id is not found"})
             }
-            await db.Timelines.destroy(id);
+            await db.Timelines.destroy({where :{id:id}}) ;
             res.status(200).send({message: "timeline is deleted"})
 
         }catch(e){
@@ -126,4 +126,3 @@ class TimelinesController {
 
 }
 export default TimelinesController
-

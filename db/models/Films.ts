@@ -9,6 +9,7 @@ const FilmSchema = {
         name:{
                 type: Sequelize.STRING,
                 allowNull: false,
+                unique: true,
         },
         price: {
                 type:Sequelize.INTEGER,
@@ -36,7 +37,7 @@ const FilmSchema = {
         }
 };
 const FilmOptions = {
-        freezeTableName: true,
+        freezeTableName: true, 
         schema: 'public',
         timestamps: false
 
