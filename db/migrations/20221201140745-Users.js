@@ -1,7 +1,7 @@
-import { DataTypes as Sequelize } from 'sequelize'
-
-const UserSchema = {
-    id: {
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('Users', {
+      id: {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
@@ -35,17 +35,10 @@ const UserSchema = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
     }
+    });
+  },
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('Users');
+  }
 };
-const UserOptions = {
-    freezeTableName: true,
-    schema: 'public',
-    timestamps: false
-
-};
-
-
-export const getModel = (seq) => {
-    const model = seq.define('Users', UserSchema, UserOptions);
-    return model;
-}
-
