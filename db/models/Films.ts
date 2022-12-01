@@ -44,9 +44,8 @@ const FilmOptions = {
 };
 const FilmAssociation = (schema) => {
         schema.Films.hasMany(schema.Timelines,{
-                as:'timelines',
+                as:'filmTimelines',
                 foreignKey:'filmId',
-                targetKey:'Id',
                 onDelete:'CASCADE',
         })
 };

@@ -26,7 +26,6 @@ class HallsController {
             const { name } = req.body;
             const hall = await db.Halls.findOne({ 
                 where:{ id:id }});
-                console.log("hall", hall)
             if(!hall){
                 return res.status(400).send({message: 'Hall not found'})
             };
@@ -35,7 +34,6 @@ class HallsController {
         } catch(e){
             console.log(e);
             res.status(400).send({error: e})
-            console.log("eeee", e)
         }
     };
         

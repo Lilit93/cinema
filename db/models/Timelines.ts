@@ -54,8 +54,13 @@ const TimelineAssociation = (schema) => {
         sourceKey: 'hallId',
         onDelete: 'CASCADE',
     });
+    schema.Timelines.hasMany(schema.Reservations, {
+        as: 'reservations',
+        foreignKey: 'timelineId',
+        onDelete: 'CASCADE',
+    });
     schema.Timelines.hasMany(schema.Films, {
-        as: 'film',
+        as: 'filmTimelines',
         foreignKey: 'id',
         sourceKey:'filmId',
         onDelete: 'CASCADE',

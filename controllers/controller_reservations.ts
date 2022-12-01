@@ -1,14 +1,22 @@
 import { Request, Response, RequestHandler } from "express";
 import path from 'path';
 import db from '../db/models'
+import TimelinesController from "./controller_timelines";
 class ReservationController {
     public addReservation = async (req, res) => {
         try {
             const { timelineId, chairId } = req.body;
-            const findeTimeline = await db.Reservations.findOne({ where :{ timelineId: timelineId } });
-            const findeChair = await db.Reservations.findOne({ where :{ chairId: chairId }});
-            if(findeTimeline && findeChair){
-                return res.status(400).send({message: "Chair is not available"})
+            const isREserved = await db.Reservations.findOne({ 
+                where :{ timelineId },
+                include: [{
+                    as: 'chairs',
+                    model: db.Chairs,
+                    where: { id: chairId }
+                }]
+            });
+
+            if(isREserved){
+                return res.status(400).send({message: "Chair is not available", isREserved})
             }
                 //@ts-ignore
                 await db.Reservations.create( { timelineId, chairId } );
@@ -53,6 +61,47 @@ class ReservationController {
             console.log(e);
             res.status(400).send({error: e})
         }
+    };
+
+    public getReservationsByFilmId = async(req, res) => {
+            try{
+                const { id } = req.params;
+                const filmExist = await db.Timelines.findAll({ 
+                    where:{ 
+                        filmId: id
+                    },
+                    include :[
+                        {
+                        as:'filmTimelines',
+                        model: db.Films,
+                        },
+                        {
+                            as:'hall',
+                            model: db.Halls,
+                            include:{
+                                model: db.Chairs,
+                                as: 'hallChairs',
+                                required: false,
+                            }
+                        },
+                        {
+                            as:'reservations',
+                            model: db.Reservations,
+                            required: true,
+                            include:{
+                                model: db.Chairs,
+                                as: 'chairs'
+                            }
+                        }
+                ]
+                    
+                })
+                return res.status(200).json(filmExist);
+                
+            } catch(e) {
+                console.log(e);
+                res.status(400).send({error: e})           
+            }
     }
 }
 

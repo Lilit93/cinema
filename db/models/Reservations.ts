@@ -41,14 +41,14 @@ const ReservationOptions = {
     timestamps: false
 };
 const ReservationAssociation = (schema) => {
-    schema.Reservations.hasMany(schema.Timelines, {
-        as: 'timelines',
-        foreignKey: 'id',
+    schema.Reservations.belongsTo(schema.Timelines, {
+        as: 'timelinesReservations',
+        foreignKey: 'timelineId',
         onDelete: 'CASCADE',
     });
-    schema.Reservations.hasOne(schema.Chairs, {
+    schema.Reservations.belongsTo(schema.Chairs, {
         as: 'chairs',
-        foreignKey: 'id',
+        foreignKey: 'chairId',
         onDelete: 'CASCADE',
     });
 }

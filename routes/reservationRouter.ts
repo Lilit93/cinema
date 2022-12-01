@@ -8,5 +8,6 @@ reservationRouter.post('/add', reservationController.addReservation);
 reservationRouter.put('/update/:id', reservationController.updateReservation)
 reservationRouter.get('/all', reservationController.getAll)
 reservationRouter.delete('/:id', reservationController.deleteReservation)
+reservationRouter.get('/getFilmReservations/:id', reservationController.getReservationsByFilmId)
 
 export default  reservationRouter
