@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lilit93/cinema.git"
+    "url": "ssh://git+https://github.com/Lilit93/cinema.git"
   },
   "bugs": {
     "url": "https://github.com/Lilit93/cinema/issues"
