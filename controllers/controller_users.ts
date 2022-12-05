@@ -57,7 +57,7 @@ class UsersController {
             if(!math){
                 return res.status(400).send({message:'invalid password'})
             }
-            const token = authorization(user.email)
+            const token = authorization(user.id)
 
             return res.status(200).send({message:'You logged in successfully',token})
 

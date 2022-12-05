@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
-import secretToken from "./authorizationSecret"
+const secret = "shhh"
 
-function generateAccessToken(email: string){
+function generateAccessToken(id: number){
     const payload = {
-        email
+        id
     }
-    return jwt.sign(payload,secretToken.secret,{ expiresIn: "10m" });
+    return jwt.sign(payload,secret,{ expiresIn: "10m" });
 }
 export default generateAccessToken;

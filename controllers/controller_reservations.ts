@@ -2,10 +2,13 @@ import { Request, Response, RequestHandler } from "express";
 import path from 'path';
 import db from '../db/models'
 import TimelinesController from "./controller_timelines";
+import authorization from '../authorization/authorizationMiddleware'
+
 class ReservationController {
     public addReservation = async (req, res) => {
         try {
             const { timelineId, chairId } = req.body;
+            const { id } = req.user;
             const isREserved = await db.Reservations.findOne({ 
                 where :{ timelineId },
                 include: [{
@@ -14,12 +17,15 @@ class ReservationController {
                     where: { id: chairId }
                 }]
             });
+            const checkUser = await db.Users.findOne({
+                where : { id:id }
+            })
 
-            if(isREserved){
+            if(isREserved && checkUser) {
                 return res.status(400).send({message: "Chair is not available", isREserved})
             }
                 //@ts-ignore
-                await db.Reservations.create( { timelineId, chairId } );
+                await db.Reservations.create( { timelineId, chairId, UserId:checkUser.id } );
                 return res.status(200).send({ message: 'Reservation is added' });
         } catch (e) {
 

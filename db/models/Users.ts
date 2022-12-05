@@ -42,10 +42,17 @@ const UserOptions = {
     timestamps: false
 
 };
+const UsersAssociation = (schema) => {
+    schema.Users.hasMany(schema.Reservations,{
+        as:'UsersReservation',
+        foreignKey:'UserId',
+        onDelete: 'CASCADE',
+    });
+};
 
 
 export const getModel = (seq) => {
-    const model = seq.define('Users', UserSchema, UserOptions);
+    const model = seq.define('Users', UserSchema, UserOptions, UsersAssociation);
     return model;
 }
 
