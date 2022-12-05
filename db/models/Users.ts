@@ -1,12 +1,29 @@
 import { DataTypes as Sequelize } from 'sequelize'
-const HallSchema = {
+
+const UserSchema = {
     id: {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
         type: Sequelize.INTEGER,
     },
-    name: {
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    lastName: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    firstName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    phone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    password: {
         type: Sequelize.STRING,
         allowNull: false,
     },
@@ -19,29 +36,16 @@ const HallSchema = {
         defaultValue: Sequelize.NOW,
     }
 };
-const HallOptions = {
+const UserOptions = {
     freezeTableName: true,
     schema: 'public',
     timestamps: false
+
 };
-const HallAssociation = (schema) => {
-    schema.Halls.hasMany(schema.Timelines,{
-        as:'hallTimelines',
-        foreignKey:'id',
-        targetKey: 'hallId',
-        onDelete: 'CASCADE',
-    });
-    schema.Halls.hasMany(schema.Chairs, {
-        as: 'hallChairs',
-        foreignKey:'hallId',
-        onDelete:'CASCADE'
-    });
-};
+
 
 export const getModel = (seq) => {
-    const model= seq.define('Halls', HallSchema, HallOptions)
-    model.associate = HallAssociation;
+    const model = seq.define('Users', UserSchema, UserOptions);
     return model;
-};
-
+}
 

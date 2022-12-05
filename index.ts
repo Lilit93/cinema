@@ -8,6 +8,7 @@ import filmRouter from "./routes/filmRouter";
 import chairRouter from './routes/chairRouter';
 import timelineRouter from './routes/timelineRouter';
 import reservationRouter from './routes/reservationRouter';
+import userRouter from './routes/usersRouter';
 import {models} from "./db";
 const app = express();
 app.use(bodyParser.json());
@@ -21,12 +22,7 @@ app.use('/api/films', filmRouter);
 app.use('/api/chairs', chairRouter);
 app.use('/api/timeline', timelineRouter);
 app.use('/api/reservations', reservationRouter);
-
-
-// app.use('/api/timelines', timelineRouter);
-// app.use('/api/chairs', chairRouter);
-
-
+app.use('/api/users', userRouter);
 
 app.listen(PORT, () => {
     console.log(`Server run ${PORT}...`)
