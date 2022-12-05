@@ -23,7 +23,16 @@ const ReservationSchema = {
             model:'Chairs',
             key: 'id'
         },
-        onDelete: 'cascade',
+        onDelete: 'CASCADE',
+    },
+    UserId: {
+        type: Sequelize.INTEGER,
+        alowNull: false,
+        references: {
+            model:'Users',
+            key: 'id'
+          },
+        onDelete: 'CASCADE'
     },
     
     createdAt: {
@@ -49,6 +58,11 @@ const ReservationAssociation = (schema) => {
     schema.Reservations.belongsTo(schema.Chairs, {
         as: 'chairs',
         foreignKey: 'chairId',
+        onDelete: 'CASCADE',
+    });
+    schema.Reservations.belongsTo(schema.Users, {
+        as: 'UsersReservation',
+        foreignKey: 'UserId',
         onDelete: 'CASCADE',
     });
 }

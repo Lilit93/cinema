@@ -1,8 +1,7 @@
 import { Request, Response, RequestHandler } from "express";
 import path from 'path';
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
-const secret: string = 'shhhh';
+import * as bcrypt from 'bcrypt'
+import authorization from '../authorization/authorizationMiddleware'
 import db from '../db/models'
 import { create } from "domain";
 
@@ -58,8 +57,9 @@ class UsersController {
             if(!math){
                 return res.status(400).send({message:'invalid password'})
             }
-            
-            return res.status(200).send({message:'You logged in successfully'})
+            const token = authorization(user.id)
+
+            return res.status(200).send({message:'You logged in successfully',token})
 
         }catch (e) {
             console.log(e);
