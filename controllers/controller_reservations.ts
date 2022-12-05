@@ -56,9 +56,11 @@ class ReservationController {
     };
     public getReservationsByFilmId = async (req, res) => {
         try{
-        const {filmId} = req.params;
-        const isFilmExist = await db.Films.findAll({where: { id: filmId }, include: [{model: db.Timelines, as: 'timelines' }]}) 
+        const { filmId } = req.params;
+        const isFilmExist = await db.Films.findAll({where: { id: filmId }}) 
+        // , include: [{model: db.Timelines, as: 'timelines' }]
         console.log("eeee", isFilmExist)
+        return res.status(200).json(isFilmExist)
         }catch(e) {
             console.log(e);
             res.status(400).send({error: e})
