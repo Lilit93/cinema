@@ -16,9 +16,15 @@ class  Cron {
                 as: 'timelinesReservations',
                 model : db.Timelines,
                 where: {
-                    started: { 
-                        [Op.lte]: db.Sequelize.literal(("(NOW() AT TIME ZONE 'UTC' + '30MIN'")),
-                    } 
+                    [Op.and] : [
+                        {
+                            started: {  [Op.lte]: db.Sequelize.literal(("(NOW() AT TIME ZONE 'UTC' + '30MIN')")), }
+                        },
+                        {
+                            started: {  [Op.gte]: db.Sequelize.literal(("(NOW() AT TIME ZONE 'UTC')")), }
+                        }
+                ]
+                  
                     
                 }
             }

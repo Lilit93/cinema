@@ -2,7 +2,7 @@ import { Request, Response, RequestHandler } from "express";
 import path from 'path';
 import db from '../db/models'
 import TimelinesController from "./controller_timelines";
-import authorization from '../authorization/authorizationMiddleware'
+import authorization from '../authorization/authorizationMiddleware';
 
 class ReservationController {
     public addReservation = async (req, res) => {
