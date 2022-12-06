@@ -48,7 +48,7 @@ const TimelineOptions = {
     timestamps: false
 };
 const TimelineAssociation = (schema) => {
-    schema.Timelines.hasOne(schema.Halls, {
+    schema.Timelines.hasMany(schema.Halls, { 
         as: 'hall',
         foreignKey: 'id',
         sourceKey: 'hallId',
