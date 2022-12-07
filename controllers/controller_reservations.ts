@@ -17,15 +17,12 @@ class ReservationController {
                     where: { id: chairId }
                 }]
             });
-            const checkUser = await db.Users.findOne({
-                where : { id:id }
-            })
 
-            if(isREserved && checkUser) {
+            if( isREserved ) {
                 return res.status(400).send({message: "Chair is not available", isREserved})
             }
                 //@ts-ignore
-                await db.Reservations.create( { timelineId, chairId, UserId:checkUser.id } );
+                await db.Reservations.create( { timelineId, chairId, UserId:id } );
                 return res.status(200).send({ message: 'Reservation is added' });
         } catch (e) {
 
@@ -56,7 +53,7 @@ class ReservationController {
 
     public deleteReservation = async (req, res) => {
         try{
-            const {id} = req.params;
+            const { id } = req.params;
             const hall =await db.Reservations.findOne({ where:{ id }});
             if(!hall){
                 return res.status(400).send({message: 'Reservation not found'})

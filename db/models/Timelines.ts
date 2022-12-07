@@ -60,7 +60,7 @@ const TimelineAssociation = (schema) => {
         onDelete: 'CASCADE',
     });
     schema.Timelines.hasMany(schema.Films, {
-        as: 'filmTimelines',
+        as: 'film',
         foreignKey: 'id',
         sourceKey:'filmId',
         onDelete: 'CASCADE',
