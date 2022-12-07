@@ -34,6 +34,11 @@ const ReservationSchema = {
           },
         onDelete: 'CASCADE'
     },
+    payed:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+
+    },
     
     createdAt: {
         type: Sequelize.DATE,

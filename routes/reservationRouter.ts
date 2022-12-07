@@ -6,7 +6,6 @@ const reservationRouter = Router();
 import tokenCheck from "../authorization/tokenCheck"
 import validationCheck from '../validator/validationCheck';
 
-
 reservationRouter.post('/add', tokenCheck,validationCheck("addReservationSchema"), reservationController.addReservation);
 reservationRouter.put('/update/:id', tokenCheck,validationCheck("updateReservationSchema"), reservationController.updateReservation)
 reservationRouter.get('/all', tokenCheck, reservationController.getAll)
