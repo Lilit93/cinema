@@ -39,7 +39,7 @@ class  DeleteReservations {
 
 const deleteReservations = new DeleteReservations ;
 
-const  deleteUnpaiedReservations = cron.schedule('* * * * *', () =>  {
+const  deleteUnpaiedReservations = cron.schedule('*/5 * * * *', () =>  {
 try{
     (async () => {
     await deleteReservations.lessThen30minute();
