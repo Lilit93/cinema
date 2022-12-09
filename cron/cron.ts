@@ -1,13 +1,14 @@
 import moment from 'moment';
 import db from '../db/models';
 import  { Op } from 'sequelize';
+import cron from 'node-cron';
 
 let thisMoment = moment();
 const thisMomentPluse30 = thisMoment.add( 30, 'minute' ).utc().format('MMMM Do YYYY, h:mm')
 // @ts-ignore
-class  Cron {
+class  DeleteReservations {
     public  lessThen30minute = async () => {
-        return await db.Reservations.findAll({
+        let a = await db.Reservations.findAll({
             where: {
                 payed: false
          }, 
@@ -18,27 +19,33 @@ class  Cron {
                 where: {
                     [Op.and] : [
                         {
-                            started: {  [Op.lte]: db.Sequelize.literal(("(NOW() AT TIME ZONE 'UTC' + '30MIN')")), }
+                            started: {  [Op.lte]: db.Sequelize.literal(("(NOW() AT TIME ZONE 'UTC' + '60MIN')")), }
                         },
                         {
                             started: {  [Op.gte]: db.Sequelize.literal(("(NOW() AT TIME ZONE 'UTC')")), }
                         }
-                ]
-                  
-                    
-                }
+                    ]   
+                },
+                plain: true,
             }
-        ]
+        ],
     })
-    }
-}
-const cron = new Cron;
+    const ids = a.map(res => res.id)
+    return await db.Reservations.destroy({where : { id : ids }}) 
+    };
+    
+};
+
+
+const deleteReservations = new DeleteReservations ;
+
+const  deleteUnpaiedReservations = cron.schedule('*/5 * * * *', () =>  {
 try{
     (async () => {
-    const res = await cron.lessThen30minute();
-    console.log("Res", res);
+    await deleteReservations.lessThen30minute();
 })()} 
 catch (e) {
     console.log(e)
-};
+}});
 
+export default deleteUnpaiedReservations
