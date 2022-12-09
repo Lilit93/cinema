@@ -10,10 +10,14 @@ import timelineRouter from './routes/timelineRouter';
 import reservationRouter from './routes/reservationRouter';
 import userRouter from './routes/usersRouter';
 import {models} from "./db";
+import cron from "./cron/cron"
+
+cron.start()
 const app = express();
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
+
 
 
 app.use('/server', serverRouter);
@@ -26,6 +30,8 @@ app.use('/api/users', userRouter);
 
 app.listen(PORT, () => {
     console.log(`Server run ${PORT}...`)
-})
+});
+
+
 
 
